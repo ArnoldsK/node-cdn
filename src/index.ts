@@ -122,6 +122,6 @@ app.delete("/f/:filename", (req, res) => {
   res.sendStatus(200)
 })
 
-app.listen(3000, () => {
-  console.log("Ready on", config.app.url)
+app.listen(config.app.port, () => {
+  console.log("Ready on", config.app.url, `(Port ${config.app.port})`)
 })
