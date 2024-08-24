@@ -155,7 +155,7 @@ app.delete("/f/:filename", withPrivate, (req, res) => {
 
 // Fallback route
 app.use((_req, res, _next) => {
-  res.status(404)
+  res.sendStatus(404)
 })
 
 app.listen(config.app.port, () => {
