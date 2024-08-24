@@ -12,8 +12,9 @@ export const withPrivate: Handler = (req, res, next) => {
     return res.sendStatus(401)
   }
 
-  // Basic comparison
-  if (auth.token !== config.auth.token) {
+  const client = config.auth.clients.find((el) => el.name === auth.client)
+
+  if (!client || client.token !== auth.token) {
     return res.sendStatus(403)
   }
 

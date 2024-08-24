@@ -1,3 +1,26 @@
+# Config
+
+Create a root file `config.json`.
+
+Example local config:
+
+```json
+{
+  "app": {
+    "url": "http://localhost:3000",
+    "port": 3000
+  },
+  "auth": {
+    "clients": [
+      {
+        "name": "local",
+        "token": "LOCAL-TEST-AUTH-KEY"
+      }
+    ]
+  }
+}
+```
+
 # Authorization
 
 Files are stored per client.

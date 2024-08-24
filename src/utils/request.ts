@@ -13,7 +13,7 @@ export const getRequestAuth = (req: Request): RequestAuth => {
       client: z
         .string()
         .trim()
-        .refine((value) => config.auth.clients.includes(value)),
+        .refine((name) => config.auth.clients.some((el) => el.name === name)),
       token: z.string().uuid(),
     })
     .parse({ client: client.toLowerCase(), token })
