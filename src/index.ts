@@ -25,7 +25,11 @@ const app = express()
 
 app.use(bodyParser.json())
 app.use(cors())
-app.use(helmet())
+app.use(
+  helmet({
+    crossOriginResourcePolicy: false,
+  }),
+)
 
 // Upload
 app.post("/u", withPrivate, withUpload, (req, res) => {
