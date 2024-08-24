@@ -8,16 +8,19 @@ const finished = promisify(stream.finished)
 import { config } from "../config"
 import { FileResponse } from "../types"
 
-export const getFileUrl = (filename: string): string => {
-  const url = new URL(`/f/${filename}`, config.app.url)
+export const getFileUrl = (client: string, filename: string): string => {
+  const url = new URL(`/f/${client}/${filename}`, config.app.url)
 
   return url.toString()
 }
 
-export const getFileResponse = (filename: string): FileResponse => {
+export const getFileResponse = (
+  client: string,
+  filename: string,
+): FileResponse => {
   return {
     filename,
-    url: getFileUrl(filename),
+    url: getFileUrl(client, filename),
   }
 }
 
@@ -26,7 +29,13 @@ export const getClientDir = (client: string): string => {
 }
 
 export const getClientFilenames = (client: string): string[] => {
-  return fs.readdirSync(getClientDir(client))
+  const dir = getClientDir(client)
+
+  if (!fs.existsSync(dir)) {
+    return []
+  }
+
+  return fs.readdirSync(dir)
 }
 
 export async function downloadFile(

@@ -13,7 +13,7 @@ const axios = require("axios")
       ],
       {
         headers: {
-          Authorization: "flapjack LOCAL-TEST-AUTH-KEY",
+          Authorization: "local LOCAL-TEST-AUTH-KEY",
         },
       },
     )

@@ -23,9 +23,7 @@ Example local config:
 
 # Authorization
 
-Files are stored per client.
-
-All requests must include headers:
+Private requests must include auth headers:
 
 ```js
 headers: {
@@ -33,37 +31,123 @@ headers: {
 }
 ```
 
-## Upload a file
+# Requests
+
+Files are stored per client.
+
+### Upload a file
+
+> Private request
 
 POST request to `/u` with FormData headers and body.
 
-## Upload a file from an URL
+Response:
 
-POST request to `/dl` with body:
-
-```typescript
-Array<{
-  url: string
-  filename: string
-}>
+```json
+{
+  "filename": "joy.png",
+  "url:" "https://cdn.example.com/f/local/joy.png"
+}
 ```
 
-## Get all files
+### Upload a file from an URL
+
+> Private request
+
+POST request to `/dl`.
+
+Example body:
+
+```json
+[
+  {
+    "filename": "joy.png",
+    "url:" "https://someremotesite.com/image.png"
+  },
+]
+```
+
+Response:
+
+```json
+[
+  {
+    "filename": "joy.png",
+    "url:" "https://cdn.example.com/f/local/joy.png"
+  },
+]
+```
+
+### Get all file data
+
+> Private request
 
 GET request to `/f`.
 
-## Get a single file
+Response:
 
-GET request to `/f/...` with the filename.
+```json
+[
+  {
+    "filename": "joy.png",
+    "url:" "https://cdn.example.com/f/local/joy.png"
+  },
+]
+```
+
+### Get a single file data
+
+> Private request
+
+GET request to `/f/:filename`.
 
 Example: `https://cdn.example.com/f/joy.png`
 
-## Delete a file
+Response:
 
-DELETE request to `/f/...` with the filename.
+```json
+{
+  "filename": "joy.png",
+  "url:" "https://cdn.example.com/f/local/joy.png"
+}
+```
+
+### View a single file
+
+> Public request
+
+GET request to `/f/:client/:filename`.
+
+Example: `https://cdn.example.com/v/local/joy.png`
+
+Response:
+
+```
+🖼️
+```
+
+### Delete a file
+
+> Private request
+
+DELETE request to `/f/:filename`.
 
 Example: `https://cdn.example.com/f/joy.png`
 
-## Delete all files
+Response:
+
+```
+
+```
+
+### Delete all files
+
+> Private request
 
 DELETE request to `/f`.
+
+Response:
+
+```
+
+```

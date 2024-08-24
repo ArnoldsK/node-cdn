@@ -26,18 +26,18 @@ const app = express()
 app.use(bodyParser.json())
 app.use(cors())
 app.use(helmet())
-app.use(withPrivate)
 
 // Upload
-app.post("/u", withUpload, (req, res) => {
+app.post("/u", withPrivate, withUpload, (req, res) => {
   const files = req.files ? Object.values(req.files) : []
-  const data = files.map(({ filename }) => getFileResponse(filename))
+  const client = getRequestClient(req)
+  const data = files.map(({ filename }) => getFileResponse(client, filename))
 
   res.json(data)
 })
 
 // Download a remote file
-app.post("/dl", async (req, res) => {
+app.post("/dl", withPrivate, async (req, res) => {
   const body = z
     .array(
       z.object({
@@ -68,19 +68,19 @@ app.post("/dl", async (req, res) => {
     ),
   )
 
-  res.json(body.data.map(({ filename }) => getFileResponse(filename)))
+  res.json(body.data.map(({ filename }) => getFileResponse(client, filename)))
 })
 
 // All files
-app.get("/f", (req, res) => {
+app.get("/f", withPrivate, (req, res) => {
   const client = getRequestClient(req)
   const filenames = getClientFilenames(client)
 
-  res.json(filenames.map(getFileResponse))
+  res.json(filenames.map((filename) => getFileResponse(client, filename)))
 })
 
 // Single file
-app.get("/f/:filename", (req, res) => {
+app.get("/f/:filename", withPrivate, (req, res) => {
   const client = getRequestClient(req)
   const filenames = getClientFilenames(client)
 
@@ -89,11 +89,29 @@ app.get("/f/:filename", (req, res) => {
     return res.sendStatus(404)
   }
 
-  res.json(getFileResponse(filename))
+  res.json(getFileResponse(client, filename))
+})
+
+// View a single file
+app.get("/f/:client/:filename", (req, res) => {
+  const client = req.params.client.toLowerCase()
+  const filenames = getClientFilenames(client)
+
+  const filename = req.params.filename
+  if (!filenames.includes(filename)) {
+    return res.sendStatus(404)
+  }
+
+  const dir = getClientDir(client)
+  const file = path.join(dir, filename)
+
+  res.sendFile(file, {
+    root: process.cwd(),
+  })
 })
 
 // Delete all files
-app.delete("/f", (req, res) => {
+app.delete("/f", withPrivate, (req, res) => {
   const client = getRequestClient(req)
   const filenames = getClientFilenames(client)
   const dir = getClientDir(client)
@@ -108,7 +126,7 @@ app.delete("/f", (req, res) => {
 })
 
 // Delete a single files
-app.delete("/f/:filename", (req, res) => {
+app.delete("/f/:filename", withPrivate, (req, res) => {
   const client = getRequestClient(req)
   const filenames = getClientFilenames(client)
 

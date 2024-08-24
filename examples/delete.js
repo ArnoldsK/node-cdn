@@ -5,7 +5,7 @@ const axios = require("axios")
   try {
     const res = await axios.delete("http://localhost:3000/f/joy.png", {
       headers: {
-        Authorization: "flapjack LOCAL-TEST-AUTH-KEY",
+        Authorization: "local LOCAL-TEST-AUTH-KEY",
       },
     })
 

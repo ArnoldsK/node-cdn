@@ -17,5 +17,6 @@ export const getClientMulter = (client: string) => {
     },
   })
 
+  // TODO add fileFilter to allow only sane types
   return multer({ storage })
 }

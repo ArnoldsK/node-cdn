@@ -15,7 +15,7 @@ formData.append("files", file, "joy (2).png")
     const res = await axios.post("http://localhost:3000/u", formData, {
       headers: {
         ...formData.getHeaders(),
-        Authorization: "flapjack LOCAL-TEST-AUTH-KEY",
+        Authorization: "local LOCAL-TEST-AUTH-KEY",
       },
     })
 
