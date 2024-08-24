@@ -63,16 +63,22 @@ app.post("/dl", withPrivate, async (req, res) => {
     fs.mkdirSync(dir)
   }
 
-  await Promise.all(
-    body.data.map((item) =>
-      downloadFile(
-        item.url,
-        path.join(dir, slugify(item.filename, { trim: true })),
-      ),
-    ),
-  )
+  const files = (
+    await Promise.allSettled(
+      body.data.map(async (item) => {
+        await downloadFile(
+          item.url,
+          path.join(dir, slugify(item.filename, { trim: true })),
+        )
 
-  res.json(body.data.map(({ filename }) => getFileResponse(client, filename)))
+        return getFileResponse(client, item.filename)
+      }),
+    )
+  )
+    .map((result) => (result.status === "fulfilled" ? result.value : null))
+    .filter((file) => !!file)
+
+  res.json(files)
 })
 
 // All files
