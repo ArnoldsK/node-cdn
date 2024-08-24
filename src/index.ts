@@ -55,6 +55,9 @@ app.post("/dl", async (req, res) => {
 
   const client = getRequestClient(req)
   const dir = getClientDir(client)
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir)
+  }
 
   await Promise.all(
     body.data.map((item) =>
