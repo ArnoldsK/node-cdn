@@ -33,13 +33,13 @@ GET request to `/f`.
 
 GET request to `/f/...` with the filename.
 
-Example: `https://cdn.arnoldsk.lv/f/joy.png`
+Example: `https://cdn.example.com/f/joy.png`
 
 ## Delete a file
 
 DELETE request to `/f/...` with the filename.
 
-Example: `https://cdn.arnoldsk.lv/f/joy.png`
+Example: `https://cdn.example.com/f/joy.png`
 
 ## Delete all files
 
