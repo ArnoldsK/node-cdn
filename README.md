@@ -46,7 +46,7 @@ Response:
 ```json
 {
   "filename": "joy.png",
-  "url:" "https://cdn.example.com/f/local/joy.png"
+  "url:" "https://hosting.example.com/f/local/joy.png"
 }
 ```
 
@@ -73,7 +73,7 @@ Response:
 [
   {
     "filename": "joy.png",
-    "url:" "https://cdn.example.com/f/local/joy.png"
+    "url:" "https://hosting.example.com/f/local/joy.png"
   },
 ]
 ```
@@ -90,7 +90,7 @@ Response:
 [
   {
     "filename": "joy.png",
-    "url:" "https://cdn.example.com/f/local/joy.png"
+    "url:" "https://hosting.example.com/f/local/joy.png"
   },
 ]
 ```
@@ -101,14 +101,14 @@ Response:
 
 GET request to `/f/:filename`.
 
-Example: `https://cdn.example.com/f/joy.png`
+Example: `https://hosting.example.com/f/joy.png`
 
 Response:
 
 ```json
 {
   "filename": "joy.png",
-  "url:" "https://cdn.example.com/f/local/joy.png"
+  "url:" "https://hosting.example.com/f/local/joy.png"
 }
 ```
 
@@ -118,7 +118,7 @@ Response:
 
 GET request to `/f/:client/:filename`.
 
-Example: `https://cdn.example.com/v/local/joy.png`
+Example: `https://hosting.example.com/v/local/joy.png`
 
 Response:
 
@@ -132,7 +132,7 @@ Response:
 
 DELETE request to `/f/:filename`.
 
-Example: `https://cdn.example.com/f/joy.png`
+Example: `https://hosting.example.com/f/joy.png`
 
 Response:
 
